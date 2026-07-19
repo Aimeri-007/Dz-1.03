@@ -124,3 +124,146 @@ firstPromise
             console.log('Второй промис провалился', error)
         }
     )
+
+
+
+
+// ========================================
+// Дз номер 3.
+// ========================================
+// №1
+
+    function delay(value, ms, shouldFail = false) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            shouldFail ? reject(new Error(`Ошибка при обработке: ${value}`)) : resolve(value)
+        }, ms)
+    })
+}
+ 
+console.log('--- Задание 1')
+ 
+delay(1, 500)
+    .then((value) => {
+        console.log('Шаг 1 выполнен, значение:', value)
+        return delay(value + 1, 500, true)
+    })
+    .then((value) => {
+        console.log('Шаг 2 выполнен, значение:', value)
+        return delay(value + 1, 500)
+    })
+    .catch((error) => {
+        console.log('Поймали ошибку в .catch:', error.message)
+    })
+    .finally(() => {
+        console.log('Задание 1 завершено (.finally сработал в любом случае)')
+    })
+ 
+ 
+// №2
+ 
+async function runChainWithAwait() {
+    console.log('--- Задание 2')
+ 
+    try {
+        const firstValue = await delay(1, 500)
+        console.log('Шаг 1 выполнен, значение:', firstValue)
+ 
+        const secondValue = await delay(firstValue + 1, 500, true) 
+        console.log('Шаг 2 выполнен, значение:', secondValue)
+ 
+        const thirdValue = await delay(secondValue + 1, 500) 
+        console.log('Шаг 3 выполнен, значение:', thirdValue)
+    } catch (error) {
+        console.log('Поймали ошибку в try/catch:', error.message)
+    } finally {
+        console.log('Задание 2 завершено (finally сработал в любом случае)')
+    }
+}
+ 
+runChainWithAwait()
+ 
+
+// Усложнённая часть задания 2
+ 
+async function processValuesSequentially(values) {
+    console.log('--- Задание 2 (усложнение)')
+ 
+    const results = []
+ 
+    for (const value of values) {
+        try {
+            const shouldFail = Math.random() > 0.7
+            const processedValue = await delay(value, 500, shouldFail)
+ 
+            results.push({value: processedValue, error: null})
+        } catch (error) {
+            results.push({value, error: error.message})
+        }
+    }
+ 
+    console.log('Результат обработки массива:', results)
+    return results
+}
+ 
+processValuesSequentially([1, 2, 3, 4])
+ 
+ 
+// №3
+
+const getParallelDelays = () => [
+    delay(1, 1000),
+    delay(2, 1500, true), 
+    delay(3, 800),
+    delay(4, 1200)
+]
+ 
+async function runWithPromiseAll() {
+    console.log('--- Задание 3')
+ 
+    try {
+        const results = await Promise.all(getParallelDelays())
+        console.log('Все промисы выполнены успешно:', results)
+    } catch (error) {
+        console.log('Promise.all упал при первой же ошибке:', error.message)
+    }
+}
+ 
+runWithPromiseAll()
+
+async function runWithPromiseAllSettled() {
+    console.log('--- Задание 3: Promise.allSettled ---')
+ 
+    const results = await Promise.allSettled(getParallelDelays())
+ 
+    const succeeded = results
+        .filter((result) => result.status === 'fulfilled')
+        .map((result) => result.value)
+ 
+    const failed = results
+        .filter((result) => result.status === 'rejected')
+        .map((result) => result.reason.message)
+ 
+    console.log('Успешные:', succeeded)
+    console.log('Проваленные:', failed)
+}
+ 
+runWithPromiseAllSettled()
+ 
+
+async function runWithPromiseRace() {
+    console.log('--- Задание 3: Promise.race ---')
+ 
+    try {
+        const result = await Promise.race([
+            delay('полезные данные', 2000),
+            delay('таймаут', 500, true)
+        ])
+        console.log('Успел раньше:', result)
+    } catch (error) {
+        console.log('Гонку выиграл таймаут (ошибка):', error.message)
+    }
+}
+ 
+runWithPromiseRace()
+ 
