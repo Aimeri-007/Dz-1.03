@@ -59,7 +59,7 @@ const autoSlider = (i = 0) => {
         }
         hideSlide()
         showSlide(i)
-    }, 4000)
+    }, 5000)
 }
 
 next.onclick = () => {
