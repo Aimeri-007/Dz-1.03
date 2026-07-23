@@ -267,3 +267,55 @@ async function runWithPromiseRace() {
  
 runWithPromiseRace()
  
+
+
+
+// Дз номер 4.
+
+const defaultImage = 'https://api.dicebear.com/7.x/adventurer/svg?seed=Default'
+ 
+const charactersList = document.querySelector('.characters-list')
+ 
+fetch('../data/characters.json')
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(`Ошибка загрузки characters.json: ${response.status}`)
+        }
+        return response.json()
+    })
+    .then((characters) => {
+        characters.forEach((character) => {
+            const card = document.createElement('div')
+            card.classList.add('character-card')
+ 
+            card.innerHTML = `
+                <div class="character-photo">
+                    <img src="${character.person_photo || defaultImage}" alt="${character.name}">
+                </div>
+                <h4>${character.name}</h4>
+                <p>Возраст: ${character.age}</p>
+            `
+ 
+            charactersList.appendChild(card)
+        })
+    })
+    .catch((error) => {
+        console.log('Не удалось загрузить персонажей:', error.message)
+    })
+ 
+ 
+ 
+fetch('../data/bio.json')
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(`Ошибка загрузки bio.json: ${response.status}`)
+        }
+        return response.json()
+    })
+    .then((bio) => {
+        console.log('Информация обо мне:', bio)
+    })
+    .catch((error) => {
+        console.log('Не удалось загрузить bio.json:', error.message)
+    })
+ 

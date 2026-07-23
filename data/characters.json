@@ -1,17 +1,17 @@
 [
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Aimeri",
+    "age": 19,
+    "person_photo": "https://api.dicebear.com/7.x/adventurer/svg?seed=Aimeri"
   },
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Ramina",
+    "age": 13,
+    "person_photo": "https://api.dicebear.com/7.x/adventurer/svg?seed=Ramina"
   },
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Aikol",
+    "age": 11,
+    "person_photo": "https://api.dicebear.com/7.x/adventurer/svg?seed=Aikol"
   }
 ]
