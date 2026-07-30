@@ -308,3 +308,30 @@
     opacity: 0.4;
     cursor: not-allowed;
 }
+
+/* TODO SWITCHER */
+
+.todo_switcher {
+    background-color: black;
+    padding: 100px 0;
+}
+
+.inner_todo_switcher {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.todo_card {
+    width: 500px;
+    height: 150px;
+    border: 1px solid var(--orange);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    color: white;
+}

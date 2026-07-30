@@ -427,3 +427,62 @@ submitFormDataBtn.addEventListener('click', async () => {
     }
 })
  
+
+
+
+
+ 
+const btnNextTodo = document.querySelector('#btn-next-todo')
+const btnPrevTodo = document.querySelector('#btn-prev-todo')
+const todoCard = document.querySelector('.todo_card')
+ 
+const MIN_TODO_ID = 1
+const MAX_TODO_ID = 200
+ 
+let currentTodoId = 1
+ 
+const BASE_URL_TODOS = 'https://jsonplaceholder.typicode.com/todos/'
+ 
+const fetchTodo = async (id = 1) => {
+    try {
+        const response = await fetch(BASE_URL_TODOS + id)
+        if (!response.ok) throw new Error('Error network')
+ 
+        const data = await response.json()
+        const {id: idCard, completed, title} = data
+        const color = completed ? 'green' : 'red'
+ 
+        todoCard.style.borderColor = color
+        todoCard.innerHTML = `
+            <p>ID - ${idCard}</p>
+            <p>${title}</p>
+            <p style="color:${color}">${completed ? 'Completed' : 'Not completed'}</p>
+        `
+    } catch (error) {
+        todoCard.style.borderColor = 'red'
+        todoCard.innerHTML = `
+            <p style="color:red">${error.message}</p>
+        `
+    }
+}
+ 
+
+const goToTodoId = (step) => {
+    let newId = currentTodoId + step
+
+    if (newId > MAX_TODO_ID) {
+        newId = MIN_TODO_ID
+    }
+ 
+    if (newId < MIN_TODO_ID) {
+        newId = MAX_TODO_ID
+    }
+ 
+    currentTodoId = newId
+    fetchTodo(currentTodoId)
+}
+ 
+fetchTodo(currentTodoId)
+ 
+btnNextTodo.onclick = () => goToTodoId(1)
+btnPrevTodo.onclick = () => goToTodoId(-1)
