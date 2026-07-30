@@ -319,3 +319,111 @@ fetch('../data/bio.json')
         console.log('Не удалось загрузить bio.json:', error.message)
     })
  
+
+
+
+
+ 
+const registrationForm = document.querySelector('#registration_form')
+const agreementCheckbox = document.querySelector('#reg_agreement')
+const submitJsonBtn = document.querySelector('#submit_json')
+const submitFormDataBtn = document.querySelector('#submit_formdata')
+const registrationResult = document.querySelector('#registration_result')
+ 
+const API_URL = 'https://jsonplaceholder.typicode.com/posts'
+ 
+agreementCheckbox.addEventListener('change', () => {
+    submitJsonBtn.disabled = !agreementCheckbox.checked
+    submitFormDataBtn.disabled = !agreementCheckbox.checked
+})
+ 
+const showResult = (message, isError = false) => {
+    registrationResult.textContent = message
+    registrationResult.style.color = isError ? 'red' : 'green'
+}
+ 
+// ---- Вариант 1
+ 
+submitJsonBtn.addEventListener('click', async () => {
+
+    if (!agreementCheckbox.checked) {
+        showResult('Сначала нужно согласиться на обработку данных', true)
+        return
+    }
+ 
+
+    if (!registrationForm.checkValidity()) {
+        registrationForm.reportValidity()
+        return
+    }
+ 
+    const formData = new FormData(registrationForm)
+ 
+    const payload = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        password: formData.get('password'),
+        age: formData.get('age'),
+        bio: formData.get('bio'),
+        gender: formData.get('gender')
+    }
+ 
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+ 
+        if (!response.ok) {
+            throw new Error(`Сервер ответил с ошибкой: ${response.status}`)
+        }
+ 
+        const result = await response.json()
+        console.log('Ответ сервера (JSON):', result)
+        showResult('Данные успешно отправлены как JSON')
+    } catch (error) {
+        
+        console.log('Ошибка при отправке JSON:', error.message)
+        showResult(`Ошибка при отправке: ${error.message}`, true)
+    }
+})
+ 
+// ---- Вариант 2
+ 
+submitFormDataBtn.addEventListener('click', async () => {
+    if (!agreementCheckbox.checked) {
+        showResult('Сначала нужно согласиться на обработку данных', true)
+        return
+    }
+ 
+    if (!registrationForm.checkValidity()) {
+        registrationForm.reportValidity()
+        return
+    }
+ 
+    
+    const formData = new FormData(registrationForm)
+ 
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+          
+            body: formData
+        })
+ 
+        if (!response.ok) {
+            throw new Error(`Сервер ответил с ошибкой: ${response.status}`)
+        }
+ 
+        const result = await response.json()
+        console.log('Ответ сервера (FormData):', result)
+        showResult('Данные успешно отправлены как FormData')
+    } catch (error) {
+        console.log('Ошибка при отправке FormData:', error.message)
+        showResult(`Ошибка при отправке: ${error.message}`, true)
+    }
+})
+ 

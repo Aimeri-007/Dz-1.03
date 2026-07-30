@@ -231,3 +231,80 @@
 .character-card p {
     color: white;
 }
+
+
+/* REGISTRATION FORM */
+
+.registration_block {
+    background: black;
+    padding: 100px 0;
+}
+
+.inner_registration_block {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.registration_form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 500px;
+}
+
+.registration_form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 20px;
+    color: var(--orange);
+}
+
+.registration_form input,
+.registration_form select,
+.registration_form textarea {
+    width: 100%;
+    font-size: 18px;
+    padding: 8px 10px;
+    color: var(--orange);
+    background: black;
+    border: 2px solid var(--orange);
+    font-family: inherit;
+}
+
+.registration_form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.registration_form select {
+    height: 45px;
+}
+
+.checkbox_label {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 10px !important;
+}
+
+.checkbox_label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--orange);
+}
+
+.registration_buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.registration_buttons .btn {
+    width: 100%;
+}
+
+.registration_buttons .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

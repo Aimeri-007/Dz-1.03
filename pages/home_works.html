@@ -83,6 +83,55 @@
         </div>
     </div>
 
+    <div class="registration_block">
+        <div class="container">
+            <h3>Homework: Registration form</h3>
+            <div class="inner_registration_block">
+                <form id="registration_form" class="registration_form">
+                    <label>
+                        Имя
+                        <input type="text" name="name" id="reg_name" required>
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" name="email" id="reg_email" required>
+                    </label>
+                    <label>
+                        Пароль
+                        <input type="password" name="password" id="reg_password" required>
+                    </label>
+                    <label>
+                        Возраст
+                        <input type="number" name="age" id="reg_age" required>
+                    </label>
+                    <label>
+                        О себе
+                        <textarea name="bio" id="reg_bio" rows="4"></textarea>
+                    </label>
+                    <label>
+                        Пол
+                        <select name="gender" id="reg_gender">
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </label>
+                    <label class="checkbox_label">
+                        <input type="checkbox" name="agreement" id="reg_agreement">
+                        Согласен на обработку персональных данных
+                    </label>
+
+                    <div class="registration_buttons">
+                        <button type="button" class="btn" id="submit_json" disabled>Отправить как JSON</button>
+                        <button type="button" class="btn" id="submit_formdata" disabled>Отправить как FormData</button>
+                    </div>
+
+                    <span class="checker" id="registration_result"></span>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
         <div class="container">
             <a href="https://www.instagram.com/baked_toastt/" target="_blank">
